@@ -1,68 +1,132 @@
-# Playwright E-Commerce Tests
+# Playwright E-Commerce Automation Project
 
-This is a small end-to-end automation project for an e-commerce website using Playwright and JavaScript.  
-The goal was to cover basic user flows and practice building a clean and simple automation structure.
+This project is an end-to-end test automation framework built using Playwright and JavaScript for an e-commerce web application.
 
-## What this project covers
+It validates core user workflows such as authentication, user registration, product interaction, cart management, and checkout behavior.
 
-The tests focus on common user actions like:
+---
 
-- Login  
-- Searching for products  
-- Adding items to cart  
-- Checking cart  
-- Basic checkout flow  
-
-## Tech used
+## Tech Stack
 
 - Playwright  
 - JavaScript  
 - Node.js  
+- GitHub Actions (CI/CD)
 
-## Project structure
+---
 
-tests/ → test files for different flows  
-pages/ → page object files (reusable methods)  
-utils/ → test data or helper functions  
-playwright.config.js  
+## Test Coverage
 
-## How to run
+Total Automated Tests: **10**
 
-Clone the repo:
+### Authentication
+- Successful login  
+- Invalid login  
 
-git clone https://github.com/monikchauhan814-create/playwright-ecommerce-tests.git  
-cd playwright-ecommerce-tests  
+### Registration
+- Successful registration  
+- Registration with existing email  
+- Password mismatch validation  
+
+### Cart & Product Flow
+- Add product to cart  
+- Verify product appears in cart  
+- Update cart quantity  
+- Remove product from cart  
+
+### Checkout
+- Validate checkout flow error when payment method is not selected  
+
+---
+
+## Project Structure
+tests/
+login.spec.js
+registration.spec.js
+cart.spec.js
+helpers/
+auth.js
+playwright.config.js
+.github/workflows/playwright.yml
+
+---
+
+## Key Challenges & Solutions
+
+- **Parallel Execution Issues**  
+  Tests were interfering with each other due to shared state (cart data).  
+  Resolved by controlling test execution and isolating test flows.
+
+- **Shared Cart State Conflicts**  
+  Multiple tests modifying the same cart caused flaky failures.  
+  Fixed by ensuring each test manages its own state.
+
+- **Locator Ambiguity**  
+  Some elements had multiple matches (e.g., product links).  
+  Resolved using more stable locators like `getByRole` and refined selectors.
+
+---
+
+## How to Run
+
+Clone the repository:
+
+---
+
+## Key Challenges & Solutions
+
+- **Parallel Execution Issues**  
+  Tests were interfering with each other due to shared state (cart data).  
+  Resolved by controlling test execution and isolating test flows.
+
+- **Shared Cart State Conflicts**  
+  Multiple tests modifying the same cart caused flaky failures.  
+  Fixed by ensuring each test manages its own state.
+
+- **Locator Ambiguity**  
+  Some elements had multiple matches (e.g., product links).  
+  Resolved using more stable locators like `getByRole` and refined selectors.
+
+---
+
+## How to Run
+
+Clone the repository:
+git clone https://github.com/monikchauhan814-create/playwright-ecommerce-tests.git
+cd playwright-ecommerce-tests
 
 Install dependencies:
-
-npm install  
+npm install
 
 Install browsers:
-
-npx playwright install  
+npx playwright install
 
 Run tests:
-
-npx playwright test  
-
-Run in headed mode:
-
-npx playwright test --headed  
+npx playwright test
 
 Open report:
+npx playwright show-report
 
-npx playwright show-report  
+---
 
-## Notes
+## CI/CD
 
-- Used Page Object Model to keep tests organized  
-- Tried to use stable locators (like getByRole where possible)  
-- Focused on writing simple and readable tests  
+This project uses GitHub Actions to automatically run Playwright tests on every push and pull request.
 
-## Why I built this
+---
 
-I wanted hands-on practice with Playwright and to understand how real test automation projects are structured.
+## Key Highlights
+
+- End-to-end UI automation using Playwright  
+- Covers real-world e-commerce workflows  
+- Includes 10 automated test scenarios  
+- Handles flaky test issues (parallel execution & shared state)  
+- Uses reusable helper functions for cleaner test design  
+- Integrated CI/CD pipeline for automated execution  
+
+---
 
 ## Author
 
 Monik Chauhan
+
