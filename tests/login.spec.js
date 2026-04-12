@@ -1,6 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-// reusable function
 async function goToLogin(page) {
   await page.goto('https://awesomeqa.com/ui/');
   await page.locator("//span[text()='My Account']").click();
