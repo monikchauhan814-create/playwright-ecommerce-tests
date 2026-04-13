@@ -39,6 +39,7 @@ Total Automated Tests: **10**
 
 ## Project Structure
 
+```
 tests/
   login.spec.js
   registration.spec.js
@@ -51,6 +52,7 @@ helpers/
 
 playwright.config.js
 .github/workflows/playwright.yml
+```
 
 
 ---
