@@ -1,22 +1,20 @@
 # Playwright E-Commerce Automation Project
 
-This project is an end-to-end test automation framework built using Playwright and JavaScript for an e-commerce web application.
+## Overview
+End-to-end test automation project built using Playwright for an OpenCart demo e-commerce application.
 
-It validates core user workflows such as authentication, user registration, product interaction, cart management, and checkout behavior.
+This project validates core user workflows including authentication, registration, cart operations, and checkout behavior.
 
 ---
 
 ## Tech Stack
-
-- Playwright  
-- JavaScript  
-- Node.js  
+- Playwright (JavaScript)
+- Node.js
 - GitHub Actions (CI/CD)
 
 ---
 
 ## Test Coverage
-
 Total Automated Tests: **10**
 
 ### Authentication
@@ -31,102 +29,69 @@ Total Automated Tests: **10**
 ### Cart & Product Flow
 - Add product to cart  
 - Verify product appears in cart  
-- Update cart quantity  
+- Update product quantity  
 - Remove product from cart  
 
 ### Checkout
-- Validate checkout flow error when payment method is not selected  
+- Validate checkout error when payment method is not selected  
 
 ---
 
 ## Project Structure
+
 tests/
 login.spec.js
 registration.spec.js
 cart.spec.js
 helpers/
+navigation.js
+cart.js
 auth.js
 playwright.config.js
 .github/workflows/playwright.yml
 
----
-
-## Key Challenges & Solutions
-
-- **Parallel Execution Issues**  
-  Tests were interfering with each other due to shared state (cart data).  
-  Resolved by controlling test execution and isolating test flows.
-
-- **Shared Cart State Conflicts**  
-  Multiple tests modifying the same cart caused flaky failures.  
-  Fixed by ensuring each test manages its own state.
-
-- **Locator Ambiguity**  
-  Some elements had multiple matches (e.g., product links).  
-  Resolved using more stable locators like `getByRole` and refined selectors.
-
----
-
-## How to Run
-
-Clone the repository:
 
 ---
 
 ## Key Challenges & Solutions
 
-- **Parallel Execution Issues**  
-  Tests were interfering with each other due to shared state (cart data).  
-  Resolved by controlling test execution and isolating test flows.
+### Parallel Execution Issues
+Tests were interfering due to shared cart state.  
+**Solution:** Disabled parallel execution and ensured test isolation.
 
-- **Shared Cart State Conflicts**  
-  Multiple tests modifying the same cart caused flaky failures.  
-  Fixed by ensuring each test manages its own state.
+### Shared Cart State Conflicts
+Multiple tests modified the same cart causing flaky failures.  
+**Solution:** Each test creates and manages its own state.
 
-- **Locator Ambiguity**  
-  Some elements had multiple matches (e.g., product links).  
-  Resolved using more stable locators like `getByRole` and refined selectors.
+### Locator Ambiguity
+Elements like product links had multiple matches.  
+**Solution:** Replaced XPath with Playwright locators (`getByRole`, scoped locators).
 
 ---
 
 ## How to Run
 
-Clone the repository:
+bash
 git clone https://github.com/monikchauhan814-create/playwright-ecommerce-tests.git
 cd playwright-ecommerce-tests
 
-Install dependencies:
 npm install
-
-Install browsers:
 npx playwright install
-
-Run tests:
 npx playwright test
 
-Open report:
+View report:
 npx playwright show-report
 
----
-
-## CI/CD
-
-This project uses GitHub Actions to automatically run Playwright tests on every push and pull request.
-
----
-
-## Key Highlights
-
-- End-to-end UI automation using Playwright  
-- Covers real-world e-commerce workflows  
-- Includes 10 automated test scenarios  
-- Handles flaky test issues (parallel execution & shared state)  
-- Uses reusable helper functions for cleaner test design  
-- Integrated CI/CD pipeline for automated execution  
-
----
-
-## Author
-
+CI/CD
+GitHub Actions runs Playwright tests automatically on every push and pull request.
+Key Highlights
+End-to-end UI automation using Playwright
+Covers real-world e-commerce workflows
+Includes 10 automated test scenarios
+Handles flaky test issues (shared state & parallel execution)
+Uses reusable helper functions for clean test design
+Integrated CI/CD pipeline
+Notes
+Checkout is partially automated due to limitations in selecting a payment method on the demo site.
+Author
 Monik Chauhan
-
