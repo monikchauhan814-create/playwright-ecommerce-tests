@@ -86,31 +86,23 @@ npx playwright show-report
 
 ```
 
----
+## CI/CD
 
-CI/CD
 GitHub Actions runs Playwright tests automatically on every push and pull request.
 
+## Key Highlights
 
----
+- End-to-end UI automation using Playwright
+- Covers real-world e-commerce workflows
+- Includes 10 automated test scenarios
+- Handles flaky test issues (shared state and parallel execution)
+- Uses reusable helper functions for clean test design
+- Integrated CI/CD pipeline
 
+## Notes
 
-Key Highlights
-End-to-end UI automation using Playwright
-Covers real-world e-commerce workflows
-Includes 10 automated test scenarios
-Handles flaky test issues (shared state & parallel execution)
-Uses reusable helper functions for clean test design
-Integrated CI/CD pipeline
-
-
----
-
-Notes
 Checkout is partially automated due to limitations in selecting a payment method on the demo site.
 
+## Author
 
----
-
-Author
 Monik Chauhan
