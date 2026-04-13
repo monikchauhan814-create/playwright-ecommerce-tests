@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 async function goToRegister(page) {
-  await page.goto('https://awesomeqa.com/ui/');
+  await page.goto('');
   await page.locator("//span[text()='My Account']").click();
   await page.locator("//a[text()='Register']").click();
 }

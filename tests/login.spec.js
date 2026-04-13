@@ -1,31 +1,36 @@
 import { test, expect } from '@playwright/test';
+import { goToLogin } from '../helpers/navigation';
 
-async function goToLogin(page) {
-  await page.goto('https://awesomeqa.com/ui/');
-  await page.locator("//span[text()='My Account']").click();
-  await page.locator("//a[text()='Login']").click();
-}
+const VALID_USER = {
+  email: 'testerguru1@protonmail.com',
+  password: 'testerguru1'
+};
 
-test('User should login successfully with valid credentials', async ({ page }) => {
+test.describe('Login Tests', () => {
 
-  await goToLogin(page);
+  test('User should login successfully with valid credentials', async ({ page }) => {
 
-  await page.locator('#input-email').fill('testerguru1@protonmail.com');
-  await page.locator('#input-password').fill('testerguru1');
+    await goToLogin(page);
 
-  await page.getByRole('button', { name: 'Login' }).click();
+    await page.locator('#input-email').fill(VALID_USER.email);
+    await page.locator('#input-password').fill(VALID_USER.password);
 
-  await expect(page).toHaveURL(/account/);
-});
+    await page.getByRole('button', { name: 'Login' }).click();
 
-test('User should not login with invalid credentials', async ({ page }) => {
+    await expect(page).toHaveURL(/account/);
+  });
 
-  await goToLogin(page);
+  test('User should not login with invalid credentials', async ({ page }) => {
 
-  await page.locator('#input-email').fill('wrong@email.com');
-  await page.locator('#input-password').fill('wrongpassword');
+    await goToLogin(page);
 
-  await page.getByRole('button', { name: 'Login' }).click();
+    await page.locator('#input-email').fill('wrong@email.com');
+    await page.locator('#input-password').fill('wrongpassword');
 
-  await expect(page.locator('.alert-danger')).toBeVisible();
+    await page.getByRole('button', { name: 'Login' }).click();
+
+    await expect(page.locator('.alert-danger'))
+      .toContainText('Warning: No match');
+  });
+
 });
