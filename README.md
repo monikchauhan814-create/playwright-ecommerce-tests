@@ -43,10 +43,12 @@ tests/
 login.spec.js
 registration.spec.js
 cart.spec.js
+
 helpers/
 navigation.js
 cart.js
 auth.js
+
 playwright.config.js
 .github/workflows/playwright.yml
 
@@ -71,7 +73,7 @@ Elements like product links had multiple matches.
 
 ## How to Run
 
-bash
+```bash
 git clone https://github.com/monikchauhan814-create/playwright-ecommerce-tests.git
 cd playwright-ecommerce-tests
 
