@@ -84,6 +84,10 @@ npx playwright test
 View report:
 npx playwright show-report
 
+```
+
+---
+
 CI/CD
 GitHub Actions runs Playwright tests automatically on every push and pull request.
 Key Highlights
