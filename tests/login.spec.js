@@ -23,8 +23,9 @@ test.describe('Login Tests', () => {
   test('User should not login with invalid credentials', async ({ page }) => {
 
     await goToLogin(page);
+    const invalidEmail = `wrong-${Date.now()}@example.com`;
 
-    await page.locator('#input-email').fill('wrong@email.com');
+    await page.locator('#input-email').fill(invalidEmail);
     await page.locator('#input-password').fill('wrongpassword');
 
     await page.getByRole('button', { name: 'Login' }).click();
@@ -33,4 +34,4 @@ test.describe('Login Tests', () => {
       .toContainText('Warning: No match');
   });
 
-});
+})
