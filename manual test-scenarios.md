@@ -1,5 +1,13 @@
 # Manual Test Scenarios
 
+This document contains manual test scenarios created for the original AwesomeQA OpenCart application.
+
+These scenarios were used for test planning, exploratory testing, and identifying candidates for automation during the development of this Playwright automation framework.
+
+The automated test suite included in this repository covers a subset of these scenarios.
+
+---
+
 ## Registration
 
 ### Positive

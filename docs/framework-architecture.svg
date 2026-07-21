@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900">
+  <defs>
+    <style>
+      .title { font: 700 34px Arial, sans-serif; fill: #111827; }
+      .subtitle { font: 600 22px Arial, sans-serif; fill: #111827; }
+      .label { font: 600 20px Arial, sans-serif; fill: #111827; }
+      .small { font: 400 16px Arial, sans-serif; fill: #374151; }
+      .box { fill: #ffffff; stroke: #374151; stroke-width: 2; rx: 18; ry: 18; }
+      .accent { fill: #eef4ff; stroke: #2563eb; stroke-width: 2.5; rx: 18; ry: 18; }
+      .db { fill: #f6f4ff; stroke: #6d28d9; stroke-width: 2.5; rx: 18; ry: 18; }
+      .support { fill: #f3f4f6; stroke: #6b7280; stroke-width: 2; rx: 18; ry: 18; }
+      .line { stroke: #374151; stroke-width: 3; fill: none; }
+    </style>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+      <path d="M0,0 L12,6 L0,12 z" fill="#374151"/>
+    </marker>
+  </defs>
+  <rect width="1400" height="900" fill="#ffffff"/>
+  <text x="700" y="60" text-anchor="middle" class="title">OpenCart Test Automation Framework</text>
+  <rect x="500" y="105" width="400" height="90" class="accent"/>
+  <text x="700" y="145" text-anchor="middle" class="subtitle">Playwright Framework</text>
+  <text x="700" y="172" text-anchor="middle" class="small">JavaScript • Node.js</text>
+  <path d="M700 195 L700 245" class="line"/>
+  <path d="M250 245 L1150 245" class="line"/>
+  <path d="M250 245 L250 285" class="line" marker-end="url(#arrow)"/>
+  <path d="M700 245 L700 285" class="line" marker-end="url(#arrow)"/>
+  <path d="M1150 245 L1150 285" class="line" marker-end="url(#arrow)"/>
+  <rect x="80" y="300" width="340" height="130" class="box"/>
+  <text x="250" y="345" text-anchor="middle" class="subtitle">UI Test Suite</text>
+  <text x="250" y="378" text-anchor="middle" class="small">Browser workflows</text>
+  <text x="250" y="405" text-anchor="middle" class="small">Registration • Login • Cart • Checkout</text>
+  <rect x="530" y="300" width="340" height="130" class="box"/>
+  <text x="700" y="345" text-anchor="middle" class="subtitle">HTTP API Test Suite</text>
+  <text x="700" y="378" text-anchor="middle" class="small">Playwright request context</text>
+  <text x="700" y="405" text-anchor="middle" class="small">Register • Add • Update • Remove</text>
+  <rect x="980" y="300" width="340" height="130" class="box"/>
+  <text x="1150" y="345" text-anchor="middle" class="subtitle">Database Test Suite</text>
+  <text x="1150" y="378" text-anchor="middle" class="small">MySQL validation</text>
+  <text x="1150" y="405" text-anchor="middle" class="small">Customer • Cart • Product records</text>
+  <path d="M250 430 L250 500" class="line" marker-end="url(#arrow)"/>
+  <path d="M700 430 L700 500" class="line" marker-end="url(#arrow)"/>
+  <path d="M1150 430 L1150 500" class="line" marker-end="url(#arrow)"/>
+  <rect x="90" y="515" width="320" height="105" class="support"/>
+  <text x="250" y="557" text-anchor="middle" class="label">UI Helpers</text>
+  <text x="250" y="590" text-anchor="middle" class="small">cart.js • navigation.js</text>
+  <rect x="540" y="515" width="320" height="105" class="support"/>
+  <text x="700" y="557" text-anchor="middle" class="label">Shared Registration Helper</text>
+  <text x="700" y="590" text-anchor="middle" class="small">registerUser()</text>
+  <rect x="990" y="515" width="320" height="105" class="support"/>
+  <text x="1150" y="557" text-anchor="middle" class="label">Database Utility</text>
+  <text x="1150" y="590" text-anchor="middle" class="small">queryDB()</text>
+  <path d="M250 620 L250 680" class="line"/>
+  <path d="M700 620 L700 680" class="line"/>
+  <path d="M1150 620 L1150 680" class="line"/>
+  <path d="M250 680 L1150 680" class="line"/>
+  <path d="M700 680 L700 715" class="line" marker-end="url(#arrow)"/>
+  <rect x="470" y="730" width="460" height="105" class="accent"/>
+  <text x="700" y="772" text-anchor="middle" class="subtitle">OpenCart Application</text>
+  <text x="700" y="805" text-anchor="middle" class="small">AwesomeQA UI environment + Local Docker environment</text>
+  <path d="M930 782 L1060 782" class="line" marker-end="url(#arrow)"/>
+  <rect x="1075" y="730" width="250" height="105" class="db"/>
+  <text x="1200" y="772" text-anchor="middle" class="subtitle">MySQL Database</text>
+  <text x="1200" y="805" text-anchor="middle" class="small">SQL verification</text>
+  <rect x="75" y="730" width="300" height="105" class="support"/>
+  <text x="225" y="768" text-anchor="middle" class="label">Supporting Tools</text>
+  <text x="225" y="797" text-anchor="middle" class="small">Docker • GitHub Actions</text>
+  <text x="225" y="822" text-anchor="middle" class="small">Playwright HTML Report</text>
+</svg>
