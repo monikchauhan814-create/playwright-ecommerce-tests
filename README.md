@@ -1,12 +1,16 @@
 # 🚀 OpenCart Test Automation Framework
+## Repository
 
-> **End-to-End Test Automation Framework built with Playwright, JavaScript, HTTP API, MySQL, SQL, Docker and GitHub Actions.**
+GitHub: https://github.com/monikchauhan814-create/playwright-ecommerce-tests
+
+> **End-to-End Test Automation Framework demonstrating UI, API and Database validation using Playwright, JavaScript, MySQL, Docker and GitHub Actions.**
 
 ![Playwright](https://img.shields.io/badge/Playwright-Automation-45ba4b?logo=playwright)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow?logo=javascript)
 ![MySQL](https://img.shields.io/badge/MySQL-Database-blue?logo=mysql)
 ![Docker](https://img.shields.io/badge/Docker-Environment-2496ED?logo=docker)
 ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CI/CD-2088FF?logo=githubactions)
+![CI](https://github.com/monikchauhan814-create/playwright-ecommerce-tests/actions/workflows/playwright.yml/badge.svg)
 
 ---
 
@@ -174,7 +178,6 @@ playwright-ecommerce-tests/
 │
 ├── .env
 ├── .gitignore
-├── before-click.png
 ├── manual-test-scenarios.md
 ├── package-lock.json
 ├── package.json
@@ -587,6 +590,24 @@ This project extends traditional UI automation by validating application behavio
 - GitHub Actions CI pipeline
 - Playwright HTML reporting
 - Maintainable and scalable automation framework
+
+## Screenshots
+
+### OpenCart Homepage
+
+![OpenCart Homepage](docs/images/opencart-homepage.png)
+
+---
+
+### Playwright HTML Report
+
+![Playwright Report](docs/images/playwright-report.png)
+
+---
+
+### GitHub Actions CI
+
+![GitHub Actions Success](docs/images/github-actions-success.png)
 
 ---
 
