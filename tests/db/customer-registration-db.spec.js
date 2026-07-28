@@ -61,17 +61,28 @@ test('registered user should be saved in database', async ({ page }) => {
     })
     .toBe(1);
 
-  const rows = await queryDB(
-    `SELECT customer_id, firstname, lastname, email
-     FROM oc_customer
-     WHERE email = ?`,
-    [email]
-  );
+const rows = await queryDB(
+  `SELECT
+      c.customer_id,
+      c.firstname,
+      c.lastname,
+      c.email,
+      c.status,
+      c.date_added,
+      cgd.name AS customer_group
+   FROM oc_customer c
+   JOIN oc_customer_group_description cgd
+     ON c.customer_group_id = cgd.customer_group_id
+   WHERE c.email = ?`,
+  [email]
+);
 
   expect(rows.length).toBe(1);
   expect(rows[0].firstname).toBe('Test');
   expect(rows[0].lastname).toBe('User');
   expect(rows[0].email).toBe(email);
+  expect(rows[0].status).toBe(1);
+expect(rows[0].customer_group).toBe('Default');
 
   console.log('REGISTERED DB USER:', rows[0]);
 });

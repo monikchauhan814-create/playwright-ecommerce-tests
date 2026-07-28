@@ -11,24 +11,21 @@ test('registered user should add product to cart and database should store cart 
 
   await page.getByRole('button', { name: 'Add to Cart' }).click();
 
-  const productRows = await queryDB(
-    `SELECT product_id
-     FROM oc_product_description
-     WHERE name = ?`,
-    ['MacBook']
-  );
-
-  expect(productRows.length).toBeGreaterThan(0);
-
-  const productId = productRows[0].product_id;
+  
 
   await expect
     .poll(async () => {
       const rows = await queryDB(
         `SELECT cart_id
-         FROM oc_cart
-         WHERE customer_id = ? AND product_id = ?`,
-        [customerId, productId]
+ FROM oc_cart
+ WHERE customer_id = ?
+   AND product_id = (
+     SELECT product_id
+     FROM oc_product_description
+     WHERE name = ?
+       AND language_id = 1
+   )`,
+[customerId, 'MacBook']
       );
 
       return rows.length;
@@ -36,15 +33,61 @@ test('registered user should add product to cart and database should store cart 
     .toBeGreaterThan(0);
 
   const cartRows = await queryDB(
-    `SELECT cart_id, customer_id, product_id, quantity
-     FROM oc_cart
-     WHERE customer_id = ? AND product_id = ?`,
-    [customerId, productId]
-  );
-
-  expect(cartRows[0].customer_id).toBe(customerId);
-  expect(cartRows[0].product_id).toBe(productId);
-  expect(cartRows[0].quantity).toBe(1);
+  `SELECT
+      c.customer_id,
+      c.product_id,
+      c.quantity,
+      pd.name AS product_name,
+      p.price,
+      p.status
+   FROM oc_cart c
+   JOIN oc_product p
+     ON c.product_id = p.product_id
+   JOIN oc_product_description pd
+     ON p.product_id = pd.product_id
+   WHERE c.customer_id = ?
+  AND c.product_id = (
+      SELECT product_id
+      FROM oc_product_description
+      WHERE name = 'MacBook'
+        AND language_id = 1
+  )`,
+  [customerId]
+);
+  expect(cartRows.length).toBeGreaterThan(0);
+expect(cartRows[0].customer_id).toBe(customerId);
+expect(cartRows[0].product_name).toBe('MacBook');
+expect(Number(cartRows[0].quantity)).toBe(1);
+expect(Number(cartRows[0].status)).toBe(1);
 
   console.log('CART DB ROW:', cartRows[0]);
+
+  await queryDB(
+  `DELETE FROM oc_cart
+   WHERE customer_id = ?`,
+  [customerId]
+);
+
+await queryDB(
+  `DELETE FROM oc_customer
+   WHERE customer_id = ?`,
+  [customerId]
+);
+
+const remainingCartRows = await queryDB(
+  `SELECT cart_id
+   FROM oc_cart
+   WHERE customer_id = ?`,
+  [customerId]
+);
+
+const remainingCustomerRows = await queryDB(
+  `SELECT customer_id
+   FROM oc_customer
+   WHERE customer_id = ?`,
+  [customerId]
+);
+
+expect(remainingCartRows.length).toBe(0);
+expect(remainingCustomerRows.length).toBe(0);
 });
