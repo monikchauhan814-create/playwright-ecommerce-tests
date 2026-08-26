@@ -25,8 +25,12 @@ steps:
     echo "=== CONTAINER STATUS ==="
     docker compose ps -a
 
-    echo "=== MYSQL LOGS ==="
-    docker compose logs mysql
+    echo "=== OPENCART CONTAINER LOGS ==="
+docker logs $(docker compose ps -aq opencart) 2>&1 || true
+
+echo "=== OPENCART INSPECT ==="
+docker inspect $(docker compose ps -aq opencart) \
+  --format='ExitCode={{.State.ExitCode}} Error={{.State.Error}}' || true
 
     echo "=== OPENCART LOGS ==="
     docker compose logs opencart
