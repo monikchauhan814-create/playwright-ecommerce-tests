@@ -22,20 +22,18 @@ steps:
   displayName: 'Start OpenCart and MySQL'
 
 - script: |
-    echo "Waiting for OpenCart to start..."
-    for i in {1..30}; do
-      if curl -f http://localhost:8080 > /dev/null 2>&1; then
-        echo "OpenCart is ready"
-        exit 0
-      fi
-      echo "Waiting for OpenCart... attempt $i"
-      sleep 10
-    done
+    echo "=== CONTAINER STATUS ==="
+    docker compose ps -a
 
-    echo "OpenCart did not become ready"
-    docker compose logs
-    exit 1
-  displayName: 'Wait for OpenCart'
+    echo "=== MYSQL LOGS ==="
+    docker compose logs mysql
+
+    echo "=== OPENCART LOGS ==="
+    docker compose logs opencart
+
+    echo "=== TESTING OPENCART ==="
+    curl -v http://localhost:8080 || true
+  displayName: 'Diagnose Docker environment'
 
 - script: |
     npx playwright install --with-deps chromium
