@@ -1,0 +1,59 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- checkout: self
+
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    npm ci
+  displayName: 'Install project dependencies'
+
+- script: |
+    docker compose up -d
+    docker compose ps
+  displayName: 'Start OpenCart and MySQL'
+
+- script: |
+    echo "Waiting for OpenCart to start..."
+    for i in {1..30}; do
+      if curl -f http://localhost:8080 > /dev/null 2>&1; then
+        echo "OpenCart is ready"
+        exit 0
+      fi
+      echo "Waiting for OpenCart... attempt $i"
+      sleep 10
+    done
+
+    echo "OpenCart did not become ready"
+    docker compose logs
+    exit 1
+  displayName: 'Wait for OpenCart'
+
+- script: |
+    npx playwright install --with-deps chromium
+  displayName: 'Install Playwright Chromium'
+
+- script: |
+    npx playwright test --project=chromium
+  displayName: 'Run Playwright tests'
+
+- task: PublishPipelineArtifact@1
+  condition: always()
+  inputs:
+    targetPath: 'playwright-report'
+    artifact: 'playwright-report'
+    publishLocation: 'pipeline'
+  displayName: 'Publish Playwright HTML report'
+
+- script: |
+    docker compose down
+  condition: always()
+  displayName: 'Stop Docker environment'
