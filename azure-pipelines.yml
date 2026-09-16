@@ -26,9 +26,16 @@ steps:
   displayName: 'Install Playwright Chromium'
 
 - script: |
-    CI=true npx playwright test --project=chromium
+    npx playwright test --project=chromium
   displayName: 'Run Playwright tests'
-
+  env:
+    CI: 'true'
+    DB_HOST: $(DB_HOST)
+    DB_PORT: $(DB_PORT)
+    DB_USER: $(DB_USER)
+    DB_PASSWORD: $(DB_PASSWORD)
+    DB_NAME: $(DB_NAME)
+    
 - task: PublishPipelineArtifact@1
   condition: always()
   inputs:
