@@ -41,3 +41,5 @@ steps:
     docker compose down
   condition: always()
   displayName: 'Stop Docker environment'
+
+  
