@@ -1,57 +1,43 @@
 trigger:
-- main
+  - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: "ubuntu-latest"
 
 steps:
-- checkout: self
+  - checkout: self
 
-- task: NodeTool@0
-  inputs:
-    versionSpec: '20.x'
-  displayName: 'Install Node.js'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: "20.x"
+    displayName: "Install Node.js"
 
-- script: |
-    npm ci
-  displayName: 'Install project dependencies'
+  - script: |
+      npm ci
+    displayName: "Install project dependencies"
 
-- script: |
-    docker compose up -d
-    docker compose ps
-  displayName: 'Start OpenCart and MySQL'
+  - script: |
+      docker compose up -d
+      docker compose ps
+    displayName: "Start OpenCart and MySQL"
 
-- script: |
-    echo "=== CONTAINER STATUS ==="
-    docker compose ps -a
+  - script: |
+      npx playwright install --with-deps chromium
+    displayName: "Install Playwright Chromium"
 
-    echo "=== OPENCART CONTAINER LOGS ==="
-docker logs $(docker compose ps -aq opencart) 2>&1 || true
+  - script: |
+      npx playwright test --project=chromium
+    displayName: "Run Playwright tests"
 
-    echo "=== OPENCART LOGS ==="
-    docker compose logs opencart
+  - task: PublishPipelineArtifact@1
+    condition: always()
+    inputs:
+      targetPath: "playwright-report"
+      artifact: "playwright-report"
+      publishLocation: "pipeline"
+    displayName: "Publish Playwright HTML report"
 
-    echo "=== TESTING OPENCART ==="
-    curl -v http://localhost:8080 || true
-  displayName: 'Diagnose Docker environment'
-
-- script: |
-    npx playwright install --with-deps chromium
-  displayName: 'Install Playwright Chromium'
-
-- script: |
-    npx playwright test --project=chromium
-  displayName: 'Run Playwright tests'
-
-- task: PublishPipelineArtifact@1
-  condition: always()
-  inputs:
-    targetPath: 'playwright-report'
-    artifact: 'playwright-report'
-    publishLocation: 'pipeline'
-  displayName: 'Publish Playwright HTML report'
-
-- script: |
-    docker compose down
-  condition: always()
-  displayName: 'Stop Docker environment'
+  - script: |
+      docker compose down
+    condition: always()
+    displayName: "Stop Docker environment"
