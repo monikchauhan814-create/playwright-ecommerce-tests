@@ -10,6 +10,7 @@ export async function registerUser(page) {
   );
 
   const cookies = await page.context().cookies();
+  console.log('COOKIES AFTER REGISTRATION PAGE:', cookies);
   const sessionCookie = cookies.find(cookie => cookie.name === 'OCSESSID');
 
   expect(sessionCookie).toBeTruthy();
