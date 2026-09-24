@@ -25,6 +25,7 @@ GitHub: https://github.com/monikchauhan814-create/playwright-ecommerce-tests
 - [Framework Design](#-framework-design)
 - [Test Coverage](#-test-coverage)
 - [Manual Test Scenarios](#-manual-test-scenarios)
+- [Performance Testing with Apache JMeter](#performance-testing-with-apache-jmeter)
 - [Security Testing with OWASP ZAP](#security-testing-with-owasp-zap)
 - [Technical Challenges Solved](#-technical-challenges-solved)
 - [Project Evolution](#-project-evolution)
@@ -297,6 +298,36 @@ This repository also includes a collection of manual test scenarios created for 
 These scenarios demonstrate the test design process used before and alongside automation, covering positive and negative test cases for registration, login, shopping cart, and checkout workflows.
 
 See [`manual-test-scenarios.md`](manual-test-scenarios.md) for the complete list.
+
+## ⚡ Performance Testing with Apache JMeter
+
+Performed baseline, load, and stress testing against the local Dockerized OpenCart application using **Apache JMeter 5.6.3**.
+
+Load was progressively increased from **1 to 300 virtual users** to evaluate response time, throughput, stability, and application behavior under increasing concurrency.
+
+| Virtual Users | Requests | Avg Response | Max Response | Error % | Throughput |
+|---:|---:|---:|---:|---:|---:|
+| 1 | 10 | 63 ms | 241 ms | 0% | 15.7/sec |
+| 50 | 500 | 61 ms | 273 ms | 0% | 48.4/sec |
+| 100 | 1,000 | 947 ms | 5,887 ms | 0% | 47.0/sec |
+| 200 | 2,000 | 3,922 ms | 36,451 ms | 0% | 35.9/sec |
+| 300 | 3,000 | 4,898 ms | 49,495 ms | 0% | 41.4/sec |
+
+### Performance Analysis
+
+- Maintained **0% HTTP errors** across the documented load tests.
+- Performance remained responsive through **50 virtual users**.
+- Significant latency degradation appeared at **100 virtual users**.
+- Average response time increased to approximately **3.9 seconds at 200 users** and **4.9 seconds at 300 users**.
+- Maximum response time reached approximately **49.5 seconds** during the 300-user test.
+- Throughput did not scale proportionally as concurrent load increased.
+
+### Stress Test Evidence — 300 Virtual Users
+
+![JMeter 300 User Stress Test](docs/images/06-jmeter-stress-300-users.png)
+
+📊 **[View complete JMeter performance results and screenshots](docs/jmeter-performance-results.md)**  
+🧪 **[View JMeter test plan](docs/jmeter-opencart-performance.jmx)**
 
 ## Security Testing with OWASP ZAP
 
