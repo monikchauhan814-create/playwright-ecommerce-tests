@@ -25,6 +25,7 @@ GitHub: https://github.com/monikchauhan814-create/playwright-ecommerce-tests
 - [Framework Design](#-framework-design)
 - [Test Coverage](#-test-coverage)
 - [Manual Test Scenarios](#-manual-test-scenarios)
+- [Security Testing with OWASP ZAP](#security-testing-with-owasp-zap)
 - [Technical Challenges Solved](#-technical-challenges-solved)
 - [Project Evolution](#-project-evolution)
 - [Reusable Components](#-reusable-components)
@@ -296,6 +297,59 @@ This repository also includes a collection of manual test scenarios created for 
 These scenarios demonstrate the test design process used before and alongside automation, covering positive and negative test cases for registration, login, shopping cart, and checkout workflows.
 
 See [`manual-test-scenarios.md`](manual-test-scenarios.md) for the complete list.
+
+## Security Testing with OWASP ZAP
+
+Performed exploratory web security testing against the local Dockerized OpenCart application using OWASP ZAP.
+
+### Security Scan Findings
+
+ZAP identified several security-related findings, including:
+
+- Vulnerable JavaScript dependency
+- Missing Content Security Policy (CSP)
+- Missing anti-clickjacking protection
+- Missing `X-Content-Type-Options`
+- Cookie security configuration concerns
+- Server/version information disclosure
+- Potential user-controlled HTML attribute / XSS surface
+- Session-management observations
+
+![OWASP ZAP Alerts](docs/images/security-testing/01-zap-alerts-overview.png)
+
+### Vulnerable JavaScript Dependency
+
+ZAP detected **Moment.js 2.24.0** as a vulnerable JavaScript dependency and associated the installed version with known CVEs.
+
+![Vulnerable Moment.js](docs/images/security-testing/02-vulnerable-momentjs-details.png)
+
+![Moment.js CVEs](docs/images/security-testing/03-vulnerable-momentjs-cves.png)
+
+### Missing Content Security Policy
+
+The application response did not include a Content Security Policy header. ZAP reported this as a medium-risk security configuration issue.
+
+![Missing CSP Header](docs/images/security-testing/04-csp-header-not-set.png)
+
+![CSP Remediation](docs/images/security-testing/05-csp-remediation-reference.png)
+
+### Manual Validation of Potential XSS Finding
+
+ZAP identified the `product_id` query parameter as a potentially user-controllable HTML attribute.
+
+![Potential XSS Finding](docs/images/security-testing/06-potential-xss-product-id.png)
+
+I manually investigated the finding rather than treating the automated scanner result as a confirmed vulnerability.
+
+Malformed input supplied to `product_id` reached the backend and triggered a PHP `TypeError`, exposing implementation details including the PHP class/method, filesystem path, source file, and line number.
+
+![Manual Validation](docs/images/security-testing/07-manual-validation-typeerror.png)
+
+The test **did not confirm exploitable XSS**. Instead, the investigation demonstrated improper error handling / information disclosure when malformed input reached the backend.
+
+### Security Testing Skills Demonstrated
+
+OWASP ZAP • Passive Security Scanning • HTTP Request/Response Analysis • Security Header Analysis • Vulnerable Dependency Detection • Input Validation Testing • Manual Finding Validation • XSS Investigation • Information Disclosure Analysis
 
 # 🔍 Technical Challenges Solved
 
