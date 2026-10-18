@@ -23,7 +23,10 @@
   "author": "Monik Chauhan",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.61.1"
+    "@cucumber/cucumber": "^13.3.0",
+    "@playwright/test": "^1.61.1",
+    "ajv": "^8.20.0",
+    "typescript": "^7.0.2"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
