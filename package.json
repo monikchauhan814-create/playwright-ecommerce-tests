@@ -7,7 +7,8 @@
     "test:ui": "playwright test tests",
     "test:db": "playwright test tests/db",
     "test:api": "playwright test tests/api",
-    "report": "playwright show-report"
+    "report": "playwright show-report",
+    "test:typed": "playwright test --config=playwright.typed.config.js"
   },
   "keywords": [
     "playwright",

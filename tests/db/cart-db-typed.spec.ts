@@ -1,3 +1,4 @@
+import { OpenCartProductPage } from '../../pages/OpenCartProductPage';
 
 import type { RowDataPacket } from 'mysql2';
 import { queryRows } from '../../utils/dbTyped';
@@ -27,11 +28,9 @@ test('registered user should add product to cart and database should store cart 
   const { customerId } = await registerUser(page);
   try {
 
-  await page.goto(
-    'http://localhost:8080/index.php?route=product/product&language=en-gb&product_id=43'
-  );
-
-  await page.getByRole('button', { name: 'Add to Cart' }).click();
+  const productPage = new OpenCartProductPage(page);
+  await productPage.openMacBook();
+  await productPage.addToCart();
 
 
 
