@@ -57,7 +57,10 @@ pipeline {
                 sh '''
                     rm -f test-results/cucumber-junit.xml
 
+                    npx playwright install chromium
+
                     npx cucumber-js features/cart-api.feature \
+                      features/cart-api-db.feature \
                       --require features/step_definitions/cart.steps.cjs \
                       --format progress \
                       --format junit:test-results/cucumber-junit.xml
