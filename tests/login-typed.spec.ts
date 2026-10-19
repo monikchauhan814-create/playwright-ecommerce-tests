@@ -1,55 +1,76 @@
 import { test, expect } from '@playwright/test';
-import { goToLogin } from '../helpers/navigationTyped';
+import { registerUser } from './helpers/registerUser';
+import { cleanupTestCustomer } from './helpers/cleanupTestCustomer';
 
-const VALID_USER = {
-  email: 'testerguru1@protonmail.com',
-  password: 'testerguru1'
-};
+const loginUrl =
+  'http://localhost:8080/index.php?route=account/login&language=en-gb';
 
-const INVALID_LOGIN_DATA = [
-  {
-    name: 'unregistered email',
-    email: `wrong-${Date.now()}@example.com`,
-    password: 'wrongpassword',
-  },
-  {
-    name: 'empty email',
-    email: '',
-    password: 'wrongpassword',
-  },
-  {
-    name: 'empty password',
-    email: 'testerguru1@protonmail.com',
-    password: '',
-  },
-];
+const logoutUrl =
+  'http://localhost:8080/index.php?route=account/logout&language=en-gb';
 
 test.describe('Login Tests', () => {
 
-  test('User should login successfully with valid credentials', async ({ page }) => {
+  test('User should login successfully with valid credentials',
+    async ({ page }) => {
+      const { email, password, customerId } = await registerUser(page);
 
-    await goToLogin(page);
+      try {
+        await page.goto(logoutUrl);
+        await page.goto(loginUrl);
 
-    await page.locator('#input-email').fill(VALID_USER.email);
-    await page.locator('#input-password').fill(VALID_USER.password);
+        await page.locator('#input-email').fill(email);
+        await page.locator('#input-password').fill(password);
+        await page.getByRole('button', { name: 'Login' }).click();
 
-    await page.getByRole('button', { name: 'Login' }).click();
+        await expect(
+          page.getByRole('link', {
+            name: 'Edit your account information'
+          })
+        ).toBeVisible();
+      } finally {
+        await cleanupTestCustomer(customerId);
+      }
+    }
+  );
 
-    await expect(page).toHaveURL(/account/);
-  });
+  const invalidCases = [
+    'unregistered email',
+    'empty email',
+    'empty password'
+  ] as const;
 
-  for (const data of INVALID_LOGIN_DATA) {
-  test(`User should not login with ${data.name}`, async ({ page }) => {
-    await goToLogin(page);
+  for (const scenario of invalidCases) {
+    test(`User should not login with ${scenario}`,
+      async ({ page }) => {
+        const { email, password, customerId } =
+          await registerUser(page);
 
-    await page.locator('#input-email').fill(data.email);
-    await page.locator('#input-password').fill(data.password);
+        try {
+          await page.goto(logoutUrl);
+          await page.goto(loginUrl);
 
-    await page.getByRole('button', { name: 'Login' }).click();
+          const enteredEmail =
+            scenario === 'empty email' ? '' :
+            scenario === 'unregistered email'
+              ? `wrong-${Date.now()}@example.com`
+              : email;
 
-    await expect(page.locator('.alert-danger'))
-      .toContainText('Warning: No match');
-  });
-}
+          const enteredPassword =
+            scenario === 'empty password' ? '' : password;
 
-})
+          await page.locator('#input-email').fill(enteredEmail);
+          await page.locator('#input-password').fill(enteredPassword);
+
+          await page.getByRole('button', { name: 'Login' }).click();
+
+          await expect(page.locator('.alert-danger'))
+            .toContainText('Warning: No match');
+
+          await expect(page).toHaveURL(/route=account\/login/);
+        } finally {
+          await cleanupTestCustomer(customerId);
+        }
+      }
+    );
+  }
+});

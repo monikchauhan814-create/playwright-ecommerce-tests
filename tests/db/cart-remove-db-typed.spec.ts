@@ -16,14 +16,15 @@ test('registered user should remove product from cart and database should delete
   await productPage.openMacBook();
   await productPage.addToCart();
 
+  const productId = await getProductIdByName('MacBook');
+
+  // Confirm cart data is persisted before navigating.
+  await expectCartItemPersisted(customerId, productId);
+
   const cartPage = new OpenCartCartPage(page);
   await cartPage.open();
 
   await expect(page.getByRole('button', { name: 'Remove' })).toBeVisible();
-
-  const productId = await getProductIdByName('MacBook');
-
-  await expectCartItemPersisted(customerId, productId);
 
   await cartPage.removeProduct();
 
